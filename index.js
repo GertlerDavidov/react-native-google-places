@@ -49,6 +49,12 @@ class RNGooglePlaces {
 	getCurrentPlace(placeFields = []) {
 		return RNGooglePlacesNative.getCurrentPlace([...RNGooglePlaces.placeFieldsDefaults, ...placeFields])
 	}
+	startSession(){
+		return RNGooglePlacesNative.startSession()
+	}
+	resetSession(){
+		return RNGooglePlacesNative.startSession()
+	}
 }
 
 export default new RNGooglePlaces()
