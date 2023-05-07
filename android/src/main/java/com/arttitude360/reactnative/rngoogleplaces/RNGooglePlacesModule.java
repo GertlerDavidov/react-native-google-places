@@ -77,14 +77,10 @@ public class RNGooglePlacesModule extends ReactContextBaseJavaModule implements 
     public RNGooglePlacesModule(ReactApplicationContext reactContext) {
         super(reactContext);
 
-        String apiKey = reactContext.getApplicationContext().getString(R.string.places_api_key);
+        // String apiKey = reactContext.getApplicationContext().getString(R.string.places_api_key);
 
         // Setup Places Client
-        if (!Places.isInitialized() && !apiKey.equals("")) {
-            Places.initialize(reactContext.getApplicationContext(), apiKey);
-        }
-
-        placesClient = Places.createClient(reactContext.getApplicationContext());
+        
 
         this.reactContext = reactContext;
         this.reactContext.addActivityEventListener(this);
@@ -282,7 +278,14 @@ public class RNGooglePlacesModule extends ReactContextBaseJavaModule implements 
 
 
     @ReactMethod
-    public void startSession(final Promise promise){
+    public void startSession(String apiKey, final Promise promise){
+        
+        if (!Places.isInitialized() && !apiKey.equals("")) {
+            Places.initialize(reactContext.getApplicationContext(), apiKey);
+        }
+
+        placesClient = Places.createClient(reactContext.getApplicationContext());
+        
         this.pendingPromise = promise;
         this.googlePlacesSession = AutocompleteSessionToken.newInstance();
 
